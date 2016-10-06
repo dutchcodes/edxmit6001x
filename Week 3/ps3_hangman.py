@@ -8,6 +8,7 @@
 # (so be sure to read the docstrings!)
 
 import random
+import string
 
 WORDLIST_FILENAME = "words.txt"
 
@@ -34,6 +35,7 @@ def chooseWord(wordlist):
 
     Returns a word from wordlist at random
     """
+    print(random.choice(wordlist))
     return random.choice(wordlist)
 
 # end of helper code
@@ -69,7 +71,7 @@ def getGuessedWord(secretWord, lettersGuessed):
     returns: string, comprised of letters and underscores that represents
       what letters in secretWord have been guessed so far.
     '''
-    # FILL IN YOUR CODE HERE...
+    
     result = ""
     for i in secretWord:
         if i in lettersGuessed:
@@ -78,16 +80,22 @@ def getGuessedWord(secretWord, lettersGuessed):
             result += '_ '
     return result
         
-getGuessedWord('grapefruit', ['y', 'g', 'f', 'r', 'u', 'e', 'm', 'i', 'w', 'h'])
-
 def getAvailableLetters(lettersGuessed):
     '''
     lettersGuessed: list, what letters have been guessed so far
     returns: string, comprised of letters that represents what letters have not
       yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE...
-    
+
+    # Alfabet als string, had ook import string kunnen gebruiken
+    alleletters = string.ascii_lowercase
+    # Loop door elke gerade letters
+    for i in lettersGuessed:
+        #Als de geraden letter voorkomt in alleletters, verwijder deze.
+        if i in alleletters:
+            alleletters = alleletters.replace(i, "")
+    #Return om te kijken of alle geraden letters zijn verwijderd uit het alfabet
+    return alleletters
 
 def hangman(secretWord):
     '''
@@ -110,15 +118,18 @@ def hangman(secretWord):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE...
-
-
-
-
-
+    print('Welcome to the game, Hangman!')
+    print('I am thinking of a word that is ' + str(len(secretWord)) +  ' letters long.')
+    print('-------------')
+    print('You have ' + amountGuessesLeft + ' left.)
+    print('Available letters: ' )
+    mistakesMade = 0
+    #for i in :
+     #   mistakesMade += 1
 
 # When you've completed your hangman function, uncomment these two lines
 # and run this file to test! (hint: you might want to pick your own
 # secretWord while you're testing)
 
-# secretWord = chooseWord(wordlist).lower()
-# hangman(secretWord)
+secretWord = chooseWord(wordlist).lower()
+hangman(secretWord)
