@@ -51,6 +51,8 @@ def isWordGuessed(secretWord, lettersGuessed):
     returns: boolean, True if all the letters of secretWord are in lettersGuessed;
       False otherwise
     '''
+    
+    #NEED TO REWRITE - VERY HACKY CODE
     numofletterstrue = 0
     for i in lettersGuessed:
         if i in secretWord:
@@ -114,54 +116,53 @@ def hangman(secretWord):
     Follows the other limitations detailed in the problem write-up.
     '''
     #Hangman variabelen
+    lettersGuessed = ''
     mistakesMade = 0
     amountGuessesLeft = 8
     lettersGuessed = []
     Dots = '-------------'
 
-    #Starting game prints
+    #Start spel prints
     print(str(secretWord) + ": test purposes")
     print('Welcome to the game Hangman!')
     print('I am thinking of a word that is ' + str(len(secretWord)) +  ' letters long.')
     print(Dots)
     
+    #Begin loop, einde loop als iswordGuessed true is of teveel fouten zijn gemaakt
     while ((mistakesMade < 8) and (not isWordGuessed(secretWord, lettersGuessed))):
         
         #Loop prints
         print('You have ' + str(amountGuessesLeft) + ' guesses left.')
         print('Available letters: ' + getAvailableLetters(lettersGuessed))
                 
-        #Guess the letter, ask for input
+        #Input vragen voor een letter
         pickedLetter = input('Please guess a letter: ')
         pickedLetter = pickedLetter.lower()
         if pickedLetter.isalpha():
             #Check of het al geraden is
             if pickedLetter in lettersGuessed:
                 print("Oops! You've already guessed that letter: " + getGuessedWord(secretWord, lettersGuessed))  
-            #Check of het in het woord zit
-            if pickedLetter in secretWord:
+            #Check of de letter in het te-raden-woord zit
+            elif pickedLetter in secretWord and not lettersGuessed:
                 lettersGuessed.append(pickedLetter)
                 print('Good guess: ' + getGuessedWord(secretWord, lettersGuessed))
+            #Anders is de letter fout. +1 fout
             else:
                 mistakesMade += 1
                 amountGuessesLeft -= 1
                 lettersGuessed.append(pickedLetter)
                 print("Oops! That letter is not in my word: " + getGuessedWord(secretWord, lettersGuessed))
             print(Dots)            
+        #Wanneer geen geldige letter wordt ingevoerd bij input
         else:
             print('No letter defined. Guess again')
 
-    #Finish the game
+    #Einde van het spel
     if isWordGuessed(secretWord, lettersGuessed):
         print('Congratulations, you won!')
     else:
         print('Sorry, you ran out of guesses. The word was ' + secretWord)
 
-
-# When you've completed your hangman function, uncomment these two lines
-# and run this file to test! (hint: you might want to pick your own
-# secretWord while you're testing)
-lettersGuessed = ''
-secretWord = 'c'
-#secretWord = chooseWord(wordlist).lower()
+#Om het script uit te voeren
+secretWord = chooseWord(wordlist).lower()
 hangman(secretWord)
