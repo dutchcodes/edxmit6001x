@@ -71,9 +71,23 @@ def getWordScore(word, n):
     n: integer (HAND_SIZE; i.e., hand size required for additional points)
     returns: int >= 0
     """
-    # TO DO ... <-- Remove this comment when you code this function
-
-
+    #Algemene variabelen
+    tempResult = 0
+    
+    #Loop door het word en voeg de value van de letter toe aan tempResult
+    for letter in word:
+        if letter in SCRABBLE_LETTER_VALUES.keys():
+            tempResult += SCRABBLE_LETTER_VALUES[letter]
+    
+    #Vermenigvuldig lengte van het woord met tempResult
+    Result = len(word) * tempResult
+    
+    #Bonus van 50 toevoegen indien maximale lengte woord wordt gebruikt
+    if len(word) == n:
+        Result += 50
+        
+    return Result
+# Testing this function--> WordScore("zevennn", 7)
 
 #
 # Problem #2: Make sure you understand how this function works and what it does!
@@ -95,6 +109,7 @@ def displayHand(hand):
              print(letter,end=" ")       # print all on the same line
     print()                             # print an empty line
 
+#Om te checken --> displayHand({'a':1, 'x':2, 'l':3, 'e':1})
 #
 # Problem #2: Make sure you understand how this function works and what it does!
 #
@@ -142,9 +157,13 @@ def updateHand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    # TO DO ... <-- Remove this comment when you code this function
 
-
+    newHand = hand.copy()
+    for letter in word:
+        newHand[letter] -= 1
+    return newHand
+        
+#Om te checken --> updateHand({'i': 1, 'm': 1, 'a': 1, 'q': 1, 'l': 2, 'u': 1}, 'quail')
 
 #
 # Problem #3: Test word validity
