@@ -179,9 +179,17 @@ def isValidWord(word, hand, wordList):
     hand: dictionary (string -> int)
     wordList: list of lowercase strings
     """
-    # TO DO ... <-- Remove this comment when you code this function
 
+    if word not in wordList:
+        return False
+    else:
+        numberDictionary = getFrequencyDict(word)
+        for letter in numberDictionary:
+            if (numberDictionary[letter] > hand.get(letter,0)):
+                return False
+        return True
 
+isValidWord('even', {'e': 1, 'v': 2, 'n': 1, 'i': 1, 'l': 2}, loadWords())
 #
 # Problem #4: Playing a hand
 #
@@ -193,7 +201,14 @@ def calculateHandlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    # TO DO... <-- Remove this comment when you code this function
+
+    handLength = 0
+    for value in hand.values():
+        handLength += value
+    return handLength
+
+    
+calculateHandlen({'p': 1, 'd': 3, 'g': 1, 'y': 1, 'l': 1, 'z': 1})
 
 
 
